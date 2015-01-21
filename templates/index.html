@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='yahoo-reset.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dialog.css') }}"/>
+    <script>
+        $SCRIPT_ROOT = {{ request.script_root|tojson|safe }}
+    </script>
+</head>
+<body>
+
+    <div class="tags-wrap" id="tags-wrap">
+        {%- for tag in tags %}
+        <div class="tags-mod">
+            <div class="tags-hd">
+                <h2>{{ tag.title }}</h2>
+            </div>
+            <div class="tags-bd">
+                <p>{{ tag.text }}</p>
+            </div>
+            <div class="tags-ft">
+                <p>{{ tag.pub_date.strftime('%Y-%m-%d %H:%M') }}</p>
+            </div>
+        </div>
+        {%- endfor %}
+    </div>
+
+    <a href="/add" class="nyroModal add-button">+</a>
+
+
+
+
+
+    <script src="{{ url_for('static', filename='jquery-1.11.1.min.js') }}"></script>
+    <script src="http://masonry.desandro.com/masonry.pkgd.js"></script>
+    <script src="http://masonry.desandro.com/masonry.pkgd.min.js"></script>
+    <script>
+        $(function(){
+            $('.nyroModal').nyroModal();
+            var $container = $('#tags-wrap');
+            // initialize
+            $container.masonry({
+                itemSelector: '.tags-mod'
+            });
+            $container.css({"visibility":"visible"})
+        })
+    </script>
+</body>
+</html>
